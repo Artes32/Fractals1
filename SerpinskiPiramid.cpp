@@ -3,7 +3,7 @@
 
 using namespace std;
 
-// прототипы функций
+// ГЇГ°Г®ГІГ®ГІГЁГЇГ» ГґГіГ­ГЄГ¶ГЁГ©
 void MyInit();
 void Display();
 void Rotate();
@@ -16,13 +16,13 @@ void DrawLineTriangle(GLfloat *a, GLfloat *b, GLfloat *c);
 void DrawLineQuoad(GLfloat *a, GLfloat *b, GLfloat *c, GLfloat *d);
 void Keyboard(unsigned char key, int x, int y);
 
-// угол для поворота
+// ГіГЈГ®Г« Г¤Г«Гї ГЇГ®ГўГ®Г°Г®ГІГ 
 GLfloat angle = 45;
-// количество уровней
+// ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГіГ°Г®ГўГ­ГҐГ©
 int level = 1;
-// закрашиваем или рисуем только ребра: false-закрашиваем, true- только ребра(клавиша P)
+// Г§Г ГЄГ°Г ГёГЁГўГ ГҐГ¬ ГЁГ«ГЁ Г°ГЁГ±ГіГҐГ¬ ГІГ®Г«ГјГЄГ® Г°ГҐГЎГ°Г : false-Г§Г ГЄГ°Г ГёГЁГўГ ГҐГ¬, true- ГІГ®Г«ГјГЄГ® Г°ГҐГЎГ°Г (ГЄГ«Г ГўГЁГёГ  P)
 bool state = false;
-// задаем пирамиду
+// Г§Г Г¤Г ГҐГ¬ ГЇГЁГ°Г Г¬ГЁГ¤Гі
 GLfloat pyramid[5][3] =
 {
 	{ -1.0, -1.0, 1.0 }, // A
@@ -34,15 +34,15 @@ GLfloat pyramid[5][3] =
 
 int main(int argc, char **argv)
 {
-	// инициализируем графику
+	// ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГ¬ ГЈГ°Г ГґГЁГЄГі
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	// создаем окно
+	// Г±Г®Г§Г¤Г ГҐГ¬ Г®ГЄГ­Г®
 	glutInitWindowSize(700, 700);
 	glutCreateWindow("Serpinski Pyramid");
 
 	MyInit();
-	// регистрация обратных вызовов
+	// Г°ГҐГЈГЁГ±ГІГ°Г Г¶ГЁГї Г®ГЎГ°Г ГІГ­Г»Гµ ГўГ»Г§Г®ГўГ®Гў
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Reshape);
 	glutKeyboardFunc(Keyboard);
@@ -55,48 +55,48 @@ int main(int argc, char **argv)
 
 void MyInit()
 {
-	// делаем черный фон
+	// Г¤ГҐГ«Г ГҐГ¬ Г·ГҐГ°Г­Г»Г© ГґГ®Г­
 	glClearColor(0.0, 0.0, 0.0, 1.0);
-	// разрешить тест глубины
+	// Г°Г Г§Г°ГҐГёГЁГІГј ГІГҐГ±ГІ ГЈГ«ГіГЎГЁГ­Г»
 	glEnable(GL_DEPTH_TEST);
-	// Улучшение в вычислении перспективы
+	// Г“Г«ГіГ·ГёГҐГ­ГЁГҐ Гў ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГЁ ГЇГҐГ°Г±ГЇГҐГЄГІГЁГўГ»
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
 void Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	// Выбор матрицы вида модели
+	// Г‚Г»ГЎГ®Г° Г¬Г ГІГ°ГЁГ¶Г» ГўГЁГ¤Г  Г¬Г®Г¤ГҐГ«ГЁ
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	// сдвинулись вглубь экрана на 4
+	// Г±Г¤ГўГЁГ­ГіГ«ГЁГ±Гј ГўГЈГ«ГіГЎГј ГЅГЄГ°Г Г­Г  Г­Г  4
 	glTranslatef(0.0, 0.0, -4.0);
-	// вращать будем по оси Y
+	// ГўГ°Г Г№Г ГІГј ГЎГіГ¤ГҐГ¬ ГЇГ® Г®Г±ГЁ Y
 	glRotatef(angle, 0, 1, 0);
-	// делим пирамиду если level > 0 и отрисовываем
+	// Г¤ГҐГ«ГЁГ¬ ГЇГЁГ°Г Г¬ГЁГ¤Гі ГҐГ±Г«ГЁ level > 0 ГЁ Г®ГІГ°ГЁГ±Г®ГўГ»ГўГ ГҐГ¬
 	DividePyramid(pyramid[0], pyramid[1], pyramid[2], pyramid[3], pyramid[4], level);
-	//Делаем сигнал на перерисовку, ибо постоянно меняем угол поворота
+	//Г„ГҐГ«Г ГҐГ¬ Г±ГЁГЈГ­Г Г« Г­Г  ГЇГҐГ°ГҐГ°ГЁГ±Г®ГўГЄГі, ГЁГЎГ® ГЇГ®Г±ГІГ®ГїГ­Г­Г® Г¬ГҐГ­ГїГҐГ¬ ГіГЈГ®Г« ГЇГ®ГўГ®Г°Г®ГІГ 
 	glutPostRedisplay();
 	glutSwapBuffers();
 }
 void Reshape(int w, int h)
 {
 	glViewport(0, 0, w, h);
-	// загружаем матрицу проекции
+	// Г§Г ГЈГ°ГіГ¦Г ГҐГ¬ Г¬Г ГІГ°ГЁГ¶Гі ГЇГ°Г®ГҐГЄГ¶ГЁГЁ
 	glMatrixMode(GL_PROJECTION);
-	//  Сброс матрицы проекции
+	//  Г‘ГЎГ°Г®Г± Г¬Г ГІГ°ГЁГ¶Г» ГЇГ°Г®ГҐГЄГ¶ГЁГЁ
 	glLoadIdentity();
-	// Вычисление соотношения геометрических размеров для окна
+	// Г‚Г»Г·ГЁГ±Г«ГҐГ­ГЁГҐ Г±Г®Г®ГІГ­Г®ГёГҐГ­ГЁГї ГЈГҐГ®Г¬ГҐГІГ°ГЁГ·ГҐГ±ГЄГЁГµ Г°Г Г§Г¬ГҐГ°Г®Гў Г¤Г«Гї Г®ГЄГ­Г 
 	gluPerspective(45.0, (GLdouble)w / (GLdouble)h, 0.1, 200.0);
-	// Выбор матрицы вида модели
+	// Г‚Г»ГЎГ®Г° Г¬Г ГІГ°ГЁГ¶Г» ГўГЁГ¤Г  Г¬Г®Г¤ГҐГ«ГЁ
 	glMatrixMode(GL_MODELVIEW);
-	// Сброс матрицы вида модели
+	// Г‘ГЎГ°Г®Г± Г¬Г ГІГ°ГЁГ¶Г» ГўГЁГ¤Г  Г¬Г®Г¤ГҐГ«ГЁ
 	glLoadIdentity();
 }
 
 void DividePyramid(GLfloat *a, GLfloat *b, GLfloat *c, GLfloat *d, GLfloat *s, int level)
 {
-	// координаты для середин ребер
+	// ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ» Г¤Г«Гї Г±ГҐГ°ГҐГ¤ГЁГ­ Г°ГҐГЎГҐГ°
 	GLfloat ab[3], bc[3], ac[3], ad[3], cd[3], bs[3], as[3], cs[3], ds[3];
 	if (level == 0)
 	{
@@ -106,18 +106,18 @@ void DividePyramid(GLfloat *a, GLfloat *b, GLfloat *c, GLfloat *d, GLfloat *s, i
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			ab[j] = (a[j] + b[j]) / 2.0; // середина A и B
-			bc[j] = (b[j] + c[j]) / 2.0; // середина B и C
-			ac[j] = (a[j] + c[j]) / 2.0; // середина A и C (центр квадрата-основания)
-			ad[j] = (a[j] + d[j]) / 2.0; // середина A и D
-			cd[j] = (c[j] + d[j]) / 2.0; // середина C и D
-			bs[j] = (b[j] + s[j]) / 2.0; // середина B и S
-			as[j] = (a[j] + s[j]) / 2.0; // середина A и S
-			cs[j] = (c[j] + s[j]) / 2.0; // середина C и S
-			ds[j] = (d[j] + s[j]) / 2.0; // середина D и S
+			ab[j] = (a[j] + b[j]) / 2.0; // Г±ГҐГ°ГҐГ¤ГЁГ­Г  A ГЁ B
+			bc[j] = (b[j] + c[j]) / 2.0; // Г±ГҐГ°ГҐГ¤ГЁГ­Г  B ГЁ C
+			ac[j] = (a[j] + c[j]) / 2.0; // Г±ГҐГ°ГҐГ¤ГЁГ­Г  A ГЁ C (Г¶ГҐГ­ГІГ° ГЄГўГ Г¤Г°Г ГІГ -Г®Г±Г­Г®ГўГ Г­ГЁГї)
+			ad[j] = (a[j] + d[j]) / 2.0; // Г±ГҐГ°ГҐГ¤ГЁГ­Г  A ГЁ D
+			cd[j] = (c[j] + d[j]) / 2.0; // Г±ГҐГ°ГҐГ¤ГЁГ­Г  C ГЁ D
+			bs[j] = (b[j] + s[j]) / 2.0; // Г±ГҐГ°ГҐГ¤ГЁГ­Г  B ГЁ S
+			as[j] = (a[j] + s[j]) / 2.0; // Г±ГҐГ°ГҐГ¤ГЁГ­Г  A ГЁ S
+			cs[j] = (c[j] + s[j]) / 2.0; // Г±ГҐГ°ГҐГ¤ГЁГ­Г  C ГЁ S
+			ds[j] = (d[j] + s[j]) / 2.0; // Г±ГҐГ°ГҐГ¤ГЁГ­Г  D ГЁ S
 		}
 
-		// рекурсивно вызываем для 5 меньших пирамидок
+		// Г°ГҐГЄГіГ°Г±ГЁГўГ­Г® ГўГ»Г§Г»ГўГ ГҐГ¬ Г¤Г«Гї 5 Г¬ГҐГ­ГјГёГЁГµ ГЇГЁГ°Г Г¬ГЁГ¤Г®ГЄ
 		DividePyramid(a, ab, ac, ad, as, level - 1);
 		DividePyramid(ab, b, bc, ac, bs, level - 1);
 		DividePyramid(ac, bc, c, cd, cs, level - 1);
@@ -127,35 +127,35 @@ void DividePyramid(GLfloat *a, GLfloat *b, GLfloat *c, GLfloat *d, GLfloat *s, i
 }
 void DrawPyramid(GLfloat *a, GLfloat *b, GLfloat *c, GLfloat *d, GLfloat *s)
 {
-	// рисуем закрашенную
+	// Г°ГЁГ±ГіГҐГ¬ Г§Г ГЄГ°Г ГёГҐГ­Г­ГіГѕ
 	if (!state)
 	{
 		glBegin(GL_TRIANGLES);
-		// красим в фиолетовый цвет
+		// ГЄГ°Г Г±ГЁГ¬ Гў ГґГЁГ®Г«ГҐГІГ®ГўГ»Г© Г¶ГўГҐГІ
 		glColor3f(0.52, 0.44, 1.0);
 		DrawTriangle(a, b, s);
-		// красим в желтый цвет
+		// ГЄГ°Г Г±ГЁГ¬ Гў Г¦ГҐГ«ГІГ»Г© Г¶ГўГҐГІ
 		glColor3f(1.0, 0.84, 0.0);
 		DrawTriangle(b, c, s);
-		// красим в фиолетовый цвет
+		// ГЄГ°Г Г±ГЁГ¬ Гў ГґГЁГ®Г«ГҐГІГ®ГўГ»Г© Г¶ГўГҐГІ
 		glColor3f(0.52, 0.44, 1.0);
 		DrawTriangle(c, d, s);
-		// красим в желтый цвет
+		// ГЄГ°Г Г±ГЁГ¬ Гў Г¦ГҐГ«ГІГ»Г© Г¶ГўГҐГІ
 		glColor3f(1.0, 0.84, 0.0);
 		DrawTriangle(a, d, s);
 		glEnd();
 
 		glBegin(GL_QUADS);
-		// красим в желтый цвет
+		// ГЄГ°Г Г±ГЁГ¬ Гў Г¦ГҐГ«ГІГ»Г© Г¶ГўГҐГІ
 		glColor3f(1.0, 0.84, 0.0);
 		DrawQuoad(a, b, c, d);
 		glEnd();
 	}
-	// или отрисовываем только ребра
+	// ГЁГ«ГЁ Г®ГІГ°ГЁГ±Г®ГўГ»ГўГ ГҐГ¬ ГІГ®Г«ГјГЄГ® Г°ГҐГЎГ°Г 
 	else
 	{
 		glBegin(GL_LINES);
-		// красим в синий цвет
+		// ГЄГ°Г Г±ГЁГ¬ Гў Г±ГЁГ­ГЁГ© Г¶ГўГҐГІ
 		glColor3f(0.0, 0.0, 1.0);
 		DrawLineTriangle(a, b, s);
 		DrawLineTriangle(c, d, s);
